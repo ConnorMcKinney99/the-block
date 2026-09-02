@@ -1,7 +1,7 @@
 import { createBrowserRouter, type RouteObject } from "react-router-dom";
 import { InventoryPage } from "../features/inventory/InventoryPage";
 import { MyBidsPage } from "../features/my-bids/MyBidsPage";
-import { VehicleDetailPage } from "../features/vehicle/VehicleDetailPage";
+import { VehicleDetailPage } from "../features/vehicle-detail/VehicleDetailPage";
 import { AppLayout, RouteNotFound } from "./AppLayout";
 
 const appRoutes: RouteObject[] = [

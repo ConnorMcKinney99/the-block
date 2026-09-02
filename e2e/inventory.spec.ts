@@ -211,6 +211,137 @@ test.describe("inventory", () => {
     ).toBeVisible();
   });
 
+  test("refines cities by province and dealerships by province and city", async ({
+    page,
+  }) => {
+    const filters = page.getByRole("complementary", {
+      name: "Inventory filters",
+    });
+    const province = filters.getByRole("combobox", { name: "Province" });
+    const city = filters.getByRole("combobox", { name: "City" });
+    const dealership = filters.getByRole("combobox", {
+      name: "Dealership",
+    });
+
+    expect(
+      await filters
+        .locator("select")
+        .evaluateAll((selects) => selects.map((select) => select.id)),
+    ).toEqual([
+      "inventory-filter-year",
+      "inventory-filter-make",
+      "inventory-filter-model",
+      "inventory-filter-lot",
+      "inventory-filter-province",
+      "inventory-filter-city",
+      "inventory-filter-dealership",
+    ]);
+    await expect(city).toBeDisabled();
+    await expect(city.locator("option")).toHaveText([
+      "Select a province first",
+    ]);
+    await expect(dealership).toBeDisabled();
+    await expect(dealership.locator("option")).toHaveText([
+      "Select a province and city first",
+    ]);
+
+    await province.selectOption("Ontario");
+    await expect(city).toBeEnabled();
+    await expect(city.locator("option")).toHaveText([
+      "All cities",
+      "Barrie",
+      "Brampton",
+      "Hamilton",
+      "Kitchener",
+      "London",
+      "Markham",
+      "Mississauga",
+      "Ottawa",
+      "Toronto",
+      "Vaughan",
+      "Windsor",
+    ]);
+    await expect(dealership).toBeDisabled();
+    await expect(dealership.locator("option")).toHaveText([
+      "Select a city first",
+    ]);
+
+    await city.selectOption("Vaughan");
+    await expect(dealership).toBeEnabled();
+    await expect(dealership.locator("option")).toHaveText([
+      "All dealerships",
+      "AutoPark Toronto",
+      "Capital City Auto",
+      "Golden Horseshoe Motors",
+      "Grand Touring Motors",
+      "King City Auto",
+      "Maple Motors",
+      "Northland Chrysler",
+    ]);
+
+    await dealership.selectOption("Northland Chrysler");
+    await expect(page.getByRole("status")).toContainText(
+      "2 vehicles matching 3 filters",
+    );
+    await expect(page.getByText("Lot A-0036", { exact: true })).toBeVisible();
+    await expect(page.getByText("Lot C-0048", { exact: true })).toBeVisible();
+
+    await city.selectOption("Toronto");
+    await expect(dealership).toHaveValue("");
+    await expect(dealership.locator("option")).toHaveText([
+      "All dealerships",
+      "Capital City Auto",
+      "Grand Touring Motors",
+      "King City Auto",
+      "Lakeshore Auto Group",
+      "Northland Chrysler",
+    ]);
+    await expect(page).not.toHaveURL(/[?&]dealership=/);
+
+    await province.selectOption("Quebec");
+    await expect(city).toHaveValue("");
+    await expect(city.locator("option")).toHaveText([
+      "All cities",
+      "Gatineau",
+      "Laval",
+      "Longueuil",
+      "Montreal",
+      "Quebec City",
+      "Sherbrooke",
+    ]);
+    await expect(dealership).toBeDisabled();
+    await expect(page).not.toHaveURL(/[?&]city=/);
+    await expect(page).not.toHaveURL(/[?&]dealership=/);
+  });
+
+  test("canonicalizes dependent location deep links", async ({ page }) => {
+    const province = page.getByRole("combobox", { name: "Province" });
+    const city = page.getByRole("combobox", { name: "City" });
+    const dealership = page.getByRole("combobox", { name: "Dealership" });
+
+    await page.goto(
+      "/?province=ontario&city=vaughan&dealership=northland%20chrysler",
+    );
+    await expect(province).toHaveValue("Ontario");
+    await expect(city).toHaveValue("Vaughan");
+    await expect(dealership).toHaveValue("Northland Chrysler");
+    await expect(page).toHaveURL(/province=Ontario/);
+    await expect(page).toHaveURL(/city=Vaughan/);
+    await expect(page).toHaveURL(/dealership=Northland/);
+
+    await page.goto(
+      "/?province=Ontario&city=Montreal&dealership=Rive-Sud%20Motors",
+    );
+    await expect(page).toHaveURL("/?province=Ontario");
+    await expect(city).toHaveValue("");
+    await expect(dealership).toHaveValue("");
+
+    await page.goto("/?city=Vaughan&dealership=Northland%20Chrysler");
+    await expect(page).toHaveURL("/");
+    await expect(city).toBeDisabled();
+    await expect(dealership).toBeDisabled();
+  });
+
   test("uses an inclusive price slider and reports reversed deep links", async ({
     page,
   }) => {

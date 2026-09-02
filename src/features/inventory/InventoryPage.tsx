@@ -4,7 +4,7 @@ import { vehicles } from "../../data/vehicles";
 import { getAuctionDisplayForLifecycle } from "../../domain/auction/selectors";
 import { formatNumber } from "../../lib/format";
 import { useAuction } from "../../state/useAuction";
-import { DemoControls } from "../demo/DemoControls";
+import { DemoControls } from "../demo-controls/DemoControls";
 import styles from "./Inventory.module.css";
 import { InventoryFilterPanel } from "./InventoryFilterPanel";
 import { InventoryLoadMore } from "./InventoryLoadMore";
@@ -274,6 +274,15 @@ export function InventoryPage() {
 
     if (key === "make") {
       nextParams.delete("model");
+    }
+
+    if (key === "province") {
+      nextParams.delete("city");
+      nextParams.delete("dealership");
+    }
+
+    if (key === "city") {
+      nextParams.delete("dealership");
     }
 
     if (value === "") {

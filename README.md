@@ -17,23 +17,25 @@ Prerequisites:
 
 ```bash
 git clone https://github.com/ConnorMcKinney99/the-block.git
-cd the-block/app
+cd the-block
 npm install
-npm run test:e2e:install
 npm run dev
 ```
+
+`npm install` also installs the Chromium binary used by the browser tests.
 
 Open [http://localhost:5173](http://localhost:5173).
 
 ## Commands
 
-Run these commands from `app/`:
+Run these commands from the repository root:
 
 | Command | Purpose |
 | --- | --- |
 | `npm run dev` | Start the Vite development server |
 | `npm run test:unit` | Run browser-free domain, storage, and inventory tests |
 | `npm run test:e2e` | Run Chromium user journeys |
+| `npm run test:e2e:install` | Reinstall the Chromium test browser |
 | `npm test` | Run both test layers |
 | `npm run lint` | Run ESLint |
 | `npm run typecheck` | Run strict TypeScript checks |
@@ -42,9 +44,9 @@ Run these commands from `app/`:
 
 ## What I Built
 
-- A 200-vehicle inventory with broad search, dependent make/model filters,
-  location and lot filters, a dual-handle price range, sorting, URL-backed
-  criteria, and incremental loading.
+- A 200-vehicle inventory with broad search, dependent make/model and
+  province/city/dealership filters, lot filtering, a dual-handle price range,
+  sorting, URL-backed criteria, and incremental loading.
 - A persistent desktop filter rail and compact sticky search/sort toolbar so
   buyers can keep their criteria visible while scrolling.
 - Image-led vehicle cards with condition stars, title status, auction timing,
@@ -80,17 +82,22 @@ data/vehicles.json
 The repository is organized as follows:
 
 ```text
-app/       React application, tests, and required build configuration
+src/       application source, organized by product feature and architecture layer
+e2e/       real-browser Playwright journeys
 data/      supplied immutable vehicle dataset
 docs/      supporting project documentation
 scripts/   supplied data-generation script
 ```
 
-Inside `app/`, `src/domain/` contains framework-independent auction rules,
-`src/state/` coordinates reducer and storage integration, `src/features/` owns
-the buyer workflows, and `e2e/` contains browser journeys. The TypeScript,
-Vite, ESLint, and Playwright configuration lives beside the application because
-it is required to install, test, and build the project reproducibly.
+Inside `src/`, `app/` is the small composition shell, `domain/` contains
+framework-independent auction rules, `state/` coordinates reducer and storage
+integration, and `features/` groups the buyer workflows as `inventory`,
+`vehicle-detail`, `auction`, `my-bids`, and `demo-controls`. Shared presentation
+components stay in `components/`, while the package manifest, lockfile, and
+build/test configuration live at the repository root.
+
+Feature-specific Codex guidance lives in `.agents/skills/`, with one focused
+repo skill for each product feature.
 
 ## Auction Assumptions
 
@@ -124,9 +131,9 @@ fraud controls, and settlement integrations.
 
 The final verification run passed:
 
-- 140 browser-free tests covering auction rules, lifecycle, storage, search,
+- 142 browser-free tests covering auction rules, lifecycle, storage, search,
   filtering, sorting, price refinement, and incremental loading.
-- 38 Chromium journeys covering inventory, details, My Bids, bidding, Buy It
+- 40 Chromium journeys covering inventory, details, My Bids, bidding, Buy It
   Now, timing, persistence failures, image fallback, keyboard behavior, routes,
   dialogs, and mobile layout.
 - ESLint, strict TypeScript checks, and the production Vite build.
@@ -138,7 +145,5 @@ native confirmation dialogs, and responsive layouts throughout the experience.
 ## AI Assistance
 
 I used Claude to develop the initial plan and Codex for iterative
-implementation, review, testing, and documentation while retaining
-responsibility for the product direction and final decisions. My workflow is
-documented in
-[`docs/AI_WORKFLOW.md`](docs/AI_WORKFLOW.md).
+implementation, review, and testing while retaining responsibility for the
+product direction and final decisions.

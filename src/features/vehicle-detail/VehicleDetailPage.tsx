@@ -1,6 +1,6 @@
 import { Link, useLocation, useParams } from "react-router-dom";
 import { findVehicleById } from "../../data/vehicles";
-import { AuctionPanel } from "../bidding/AuctionPanel";
+import { AuctionPanel } from "../auction/AuctionPanel";
 import styles from "./VehicleDetail.module.css";
 import { VehicleFacts } from "./VehicleFacts";
 import { VehicleGallery } from "./VehicleGallery";

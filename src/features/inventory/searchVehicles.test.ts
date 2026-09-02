@@ -142,6 +142,8 @@ describe("inventory filters", () => {
     expect(options.year.at(-1)).toBe("2016");
     expect(options.lot).toEqual(["A", "B", "C", "D"]);
     expect(options.model).toEqual([]);
+    expect(options.city).toEqual([]);
+    expect(options.dealership).toEqual([]);
   });
 
   it("offers only models belonging to the selected make", () => {
@@ -154,6 +156,42 @@ describe("inventory filters", () => {
     expect(getInventoryFilterOptions(vehicles, "Jeep").model).toEqual([
       "Grand Cherokee",
       "Wrangler",
+    ]);
+  });
+
+  it("offers cities by province and dealerships by province and city", () => {
+    const ontarioOptions = getInventoryFilterOptions(vehicles, "", "oNtArIo");
+
+    expect(ontarioOptions.city).toEqual([
+      "Barrie",
+      "Brampton",
+      "Hamilton",
+      "Kitchener",
+      "London",
+      "Markham",
+      "Mississauga",
+      "Ottawa",
+      "Toronto",
+      "Vaughan",
+      "Windsor",
+    ]);
+    expect(ontarioOptions.dealership).toEqual([]);
+
+    const vaughanOptions = getInventoryFilterOptions(
+      vehicles,
+      "",
+      "Ontario",
+      "vAuGhAn",
+    );
+
+    expect(vaughanOptions.dealership).toEqual([
+      "AutoPark Toronto",
+      "Capital City Auto",
+      "Golden Horseshoe Motors",
+      "Grand Touring Motors",
+      "King City Auto",
+      "Maple Motors",
+      "Northland Chrysler",
     ]);
   });
 
@@ -175,6 +213,55 @@ describe("inventory filters", () => {
     expect(valid.options.model).toEqual(["3 Series", "5 Series", "X3", "X5"]);
     expect(incompatible.filters).toMatchObject({ make: "BMW", model: "" });
     expect(modelOnly.filters).toMatchObject({ make: "", model: "" });
+  });
+
+  it("resolves province before city and dealership for deep links", () => {
+    const valid = resolveInventoryFilters(
+      vehicles,
+      new URLSearchParams(
+        "province=ontario&city=vaughan&dealership=northland+chrysler",
+      ),
+    );
+    const incompatibleCity = resolveInventoryFilters(
+      vehicles,
+      new URLSearchParams(
+        "province=Ontario&city=Montreal&dealership=Rive-Sud+Motors",
+      ),
+    );
+    const incompatibleDealership = resolveInventoryFilters(
+      vehicles,
+      new URLSearchParams(
+        "province=Ontario&city=Vaughan&dealership=Lakeshore+Auto+Group",
+      ),
+    );
+    const childrenOnly = resolveInventoryFilters(
+      vehicles,
+      new URLSearchParams(
+        "city=Vaughan&dealership=Northland+Chrysler",
+      ),
+    );
+
+    expect(valid.filters).toMatchObject({
+      province: "Ontario",
+      city: "Vaughan",
+      dealership: "Northland Chrysler",
+    });
+    expect(valid.options.dealership).toContain("Northland Chrysler");
+    expect(incompatibleCity.filters).toMatchObject({
+      province: "Ontario",
+      city: "",
+      dealership: "",
+    });
+    expect(incompatibleDealership.filters).toMatchObject({
+      province: "Ontario",
+      city: "Vaughan",
+      dealership: "",
+    });
+    expect(childrenOnly.filters).toMatchObject({
+      province: "",
+      city: "",
+      dealership: "",
+    });
   });
 
   it("canonicalizes recognized URL values for the filter controls", () => {

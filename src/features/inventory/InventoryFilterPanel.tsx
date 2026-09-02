@@ -71,7 +71,16 @@ export function InventoryFilterPanel({
         <div className={styles.filterGrid}>
           {inventoryFilterDefinitions.map(({ key, label, allLabel }) => {
             const selectedValue = filters[key];
-            const modelNeedsMake = key === "model" && filters.make === "";
+            const prerequisiteLabel =
+              key === "model" && filters.make === ""
+                ? "Select a make first"
+                : key === "city" && filters.province === ""
+                  ? "Select a province first"
+                  : key === "dealership" && filters.province === ""
+                    ? "Select a province and city first"
+                    : key === "dealership" && filters.city === ""
+                      ? "Select a city first"
+                      : null;
 
             return (
               <div className={styles.filterField} key={key}>
@@ -79,11 +88,11 @@ export function InventoryFilterPanel({
                 <select
                   id={`inventory-filter-${key}`}
                   value={selectedValue}
-                  disabled={modelNeedsMake}
+                  disabled={prerequisiteLabel !== null}
                   onChange={(event) => onChange(key, event.target.value)}
                 >
                   <option value="">
-                    {modelNeedsMake ? "Select a make first" : allLabel}
+                    {prerequisiteLabel ?? allLabel}
                   </option>
                   {options[key].map((option) => (
                     <option key={option} value={option}>
