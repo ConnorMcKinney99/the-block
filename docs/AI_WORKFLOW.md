@@ -25,7 +25,7 @@ The phases were planned from the beginning around this progression:
 3. Add pure auction rules, buyer bidding, shared state, and local persistence.
 4. Add auction timing, settlement, Buy It Now, and My Bids.
 5. Harden the browser experience, improve accessibility and responsiveness,
-   refine the visual design, and prepare the final submission.
+   refine the visual design, and complete final verification.
 
 I treated that output as an implementation guide rather than a one-time prompt.
 It gave the project a clear direction while still leaving room to adjust the
@@ -53,7 +53,7 @@ Codex helped me:
 - review storage validation, keyboard behavior, accessibility, and responsive
   layouts;
 - build browser-free rule tests and real Chromium user journeys;
-- update the project structure and documentation for the final submission.
+- refine the project structure and regression coverage.
 
 I used the running application and automated results to guide each iteration.
 When something did not read clearly or work the way I expected, I adjusted the
@@ -61,22 +61,20 @@ requirement and had Codex update the implementation and regression coverage.
 
 ## Time Investment
 
-I spent roughly three hours getting the site to a functional state. Once the
-core experience was working, I got a little carried away and spent about three
-additional hours adding polish, refining the visual design, and making smaller
-usability tweaks throughout the application.
+I spent about three hours getting the site to a functional state. Once the core
+experience was working, I got a little carried away and spent another three
+hours adding additional features and polish.
 
 ## Quality Controls and Final Review
 
 I kept the supplied dataset and generator unchanged, required the auction rules
 to remain independent of React, and used one shared display model across cards,
-details, and My Bids. I also kept the work local until I was ready to prepare
-the final repository submission.
+details, and My Bids.
 
 Each major implementation pass included linting, strict TypeScript checking,
 relevant automated tests, and a production build. I also reviewed the desktop
-and mobile layouts during the final UI work. The finished project passed 140
-browser-free tests, 38 Chromium journeys, ESLint, strict TypeScript checks, and
+and mobile layouts during the final UI work. The finished project passed 142
+browser-free tests, 40 Chromium journeys, ESLint, strict TypeScript checks, and
 the production build.
 
 Claude helped me turn my initial direction into a detailed plan, and Codex

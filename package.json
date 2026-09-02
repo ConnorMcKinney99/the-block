@@ -8,6 +8,7 @@
     "npm": ">=11"
   },
   "scripts": {
+    "postinstall": "npm run test:e2e:install",
     "dev": "vite",
     "build": "tsc -b --pretty false && vite build",
     "lint": "eslint .",

@@ -1,25 +1,21 @@
 # The Block
 
-Repository: [github.com/ConnorMcKinney99/the-block](https://github.com/ConnorMcKinney99/the-block)
-
 ## How to Run
 
-The application lives in the `app` folder. You will need Node.js 24.15 or newer
-and npm 11 or newer.
+You will need Node.js 24.15 or newer and npm 11 or newer.
 
 ```bash
 git clone https://github.com/ConnorMcKinney99/the-block.git
-cd the-block/app
+cd the-block
 npm install
-npm run test:e2e:install
 npm run dev
 ```
 
 The site will be available at [http://localhost:5173](http://localhost:5173).
-The Playwright install is only needed for the browser tests, but I included it
-in the setup so the whole project is ready to verify after cloning.
+The install hook also installs the Chromium binary used by the browser tests,
+so the whole project is ready to verify after cloning.
 
-To run the full verification suite from `app/`:
+To run the full verification suite from the repository root:
 
 ```bash
 npm test
@@ -30,15 +26,9 @@ npm run build
 
 ## Time Spent
 
-I did not keep an exact timer, so I do not want to make up an hour total. I
-worked on the project in a series of focused passes: first understanding the
-dataset and the buyer flow, then building inventory and vehicle details,
-followed by the auction rules and persistence, and finally testing, responsive
-polish, and documentation.
-
-My priority was to get the core experience working correctly before adding
-extra features. Once browsing, details, and bidding were stable, I added the
-auction lifecycle, Buy It Now, My Bids, and the final visual treatment.
+I spent about three hours getting the site to a functional state. Once the core
+experience was working, I got a little carried away and spent another three
+hours adding additional features and polish.
 
 ## Assumptions and Scope
 
@@ -75,8 +65,9 @@ search and filter the inventory, open any vehicle card, inspect its photos and
 details, place a maximum bid, use an eligible Buy It Now offer, and then follow
 their activity from My Bids.
 
-The inventory includes dependent make/model filters, lot and location filters,
-a price range, sorting, URL-backed search criteria, and incremental loading.
+The inventory includes dependent make/model and province/city/dealership
+filters, lot filtering, a price range, sorting, URL-backed search criteria,
+and incremental loading.
 The desktop filter rail and search/sort controls stay available while the list
 scrolls. Vehicle cards are image-focused and show condition stars, title
 status, auction timing, and bid pricing directly on the preview.
@@ -109,12 +100,12 @@ theme and made the experience work across desktop and mobile layouts.
 
 ## Testing
 
-The final automated suite has 178 passing tests:
+The final automated suite has 182 passing tests:
 
-- 140 browser-free tests cover proxy-bid transitions, reserve boundaries, bid
+- 142 browser-free tests cover proxy-bid transitions, reserve boundaries, bid
   counts, auction lifecycle math, Buy It Now, storage validation and tampering,
   search, filters, price refinement, sorting, and incremental loading.
-- 38 Chromium journeys cover inventory, vehicle details, My Bids, maximum bids,
+- 40 Chromium journeys cover inventory, vehicle details, My Bids, maximum bids,
   Buy It Now, exact-deadline rejection, demo controls, refresh persistence,
   corrupt and unavailable storage, image failure, keyboard behavior,
   confirmation dialogs, routing, and mobile layout.
@@ -126,13 +117,6 @@ not depend on network image availability.
 
 ## What I'd Do With More Time
 
-The biggest next step would be replacing the browser-owned auction state with a
-server-authoritative service. I would add authenticated bidders, durable bid
-events, idempotent commands, concurrency controls, audit history, secure live
-updates, and proper auction settlement.
-
-On the product side, I would test the bidding and reserve language with real
-buyers, replace the placeholder media with an optimized image pipeline, and add
-watchlists and notifications if research showed they were useful. I would also
-expand the automated checks to more browsers and physical devices and add
-dedicated accessibility, performance, and visual-regression testing.
+With more time, I would move auction state to a backend so bids could sync
+safely across users and devices. I would also improve the vehicle images, add
+watchlists and notifications, and expand browser and accessibility testing.

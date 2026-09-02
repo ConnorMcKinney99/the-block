@@ -64,9 +64,9 @@ export function readInventoryFilters(
     make: readFilterValue(searchParams, "make", options),
     model: readFilterValue(searchParams, "model", options),
     lot: readFilterValue(searchParams, "lot", options),
-    dealership: readFilterValue(searchParams, "dealership", options),
-    city: readFilterValue(searchParams, "city", options),
     province: readFilterValue(searchParams, "province", options),
+    city: readFilterValue(searchParams, "city", options),
+    dealership: readFilterValue(searchParams, "dealership", options),
   };
 }
 
@@ -127,8 +127,12 @@ function getSortedOptions(
 export function getInventoryFilterOptions(
   inventory: readonly Vehicle[],
   selectedMake = "",
+  selectedProvince = "",
+  selectedCity = "",
 ): InventoryFilterOptions {
   const normalizedMake = normalizeInventoryCriterion(selectedMake);
+  const normalizedProvince = normalizeInventoryCriterion(selectedProvince);
+  const normalizedCity = normalizeInventoryCriterion(selectedCity);
   const modelInventory =
     normalizedMake === ""
       ? []
@@ -136,15 +140,30 @@ export function getInventoryFilterOptions(
           (vehicle) =>
             normalizeInventoryCriterion(vehicle.make) === normalizedMake,
         );
+  const cityInventory =
+    normalizedProvince === ""
+      ? []
+      : inventory.filter(
+          (vehicle) =>
+            normalizeInventoryCriterion(vehicle.province) ===
+            normalizedProvince,
+        );
+  const dealershipInventory =
+    normalizedProvince === "" || normalizedCity === ""
+      ? []
+      : cityInventory.filter(
+          (vehicle) =>
+            normalizeInventoryCriterion(vehicle.city) === normalizedCity,
+        );
 
   return {
     year: getSortedOptions(inventory, "year"),
     make: getSortedOptions(inventory, "make"),
     model: getSortedOptions(modelInventory, "model"),
     lot: getSortedOptions(inventory, "lot"),
-    dealership: getSortedOptions(inventory, "dealership"),
-    city: getSortedOptions(inventory, "city"),
     province: getSortedOptions(inventory, "province"),
+    city: getSortedOptions(cityInventory, "city"),
+    dealership: getSortedOptions(dealershipInventory, "dealership"),
   };
 }
 
@@ -158,7 +177,28 @@ export function resolveInventoryFilters(
     searchParams.get("make") ?? "",
     makeOptions,
   );
-  const options = getInventoryFilterOptions(inventory, requestedMake);
+  const provinceOptions = getSortedOptions(inventory, "province");
+  const requestedProvince = findCanonicalOption(
+    "province",
+    searchParams.get("province") ?? "",
+    provinceOptions,
+  );
+  const locationOptions = getInventoryFilterOptions(
+    inventory,
+    requestedMake,
+    requestedProvince,
+  );
+  const requestedCity = findCanonicalOption(
+    "city",
+    searchParams.get("city") ?? "",
+    locationOptions.city,
+  );
+  const options = getInventoryFilterOptions(
+    inventory,
+    requestedMake,
+    requestedProvince,
+    requestedCity,
+  );
 
   return {
     filters: readInventoryFilters(searchParams, options),

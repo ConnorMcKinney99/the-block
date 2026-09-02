@@ -5,13 +5,13 @@ export const inventoryFilterDefinitions = [
   { key: "make", label: "Make", allLabel: "All makes" },
   { key: "model", label: "Model", allLabel: "All models" },
   { key: "lot", label: "Lot series", allLabel: "All lot series" },
+  { key: "province", label: "Province", allLabel: "All provinces" },
+  { key: "city", label: "City", allLabel: "All cities" },
   {
     key: "dealership",
     label: "Dealership",
     allLabel: "All dealerships",
   },
-  { key: "city", label: "City", allLabel: "All cities" },
-  { key: "province", label: "Province", allLabel: "All provinces" },
 ] as const;
 
 export const removedInventoryFilterKeys = ["trim", "vin"] as const;

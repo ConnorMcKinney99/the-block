@@ -1,4 +1,4 @@
-import vehicleJson from "../../../data/vehicles.json" with { type: "json" };
+import vehicleJson from "../../data/vehicles.json" with { type: "json" };
 import type { Vehicle, VehicleRecord } from "../domain/vehicle/types";
 
 const vehicleRecords = vehicleJson as VehicleRecord[];
