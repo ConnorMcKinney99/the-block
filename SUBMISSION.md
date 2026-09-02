@@ -1,7 +1,5 @@
 # The Block
 
-Repository: [github.com/ConnorMcKinney99/the-block](https://github.com/ConnorMcKinney99/the-block)
-
 ## How to Run
 
 The application lives in the `app` folder. You will need Node.js 24.15 or newer
