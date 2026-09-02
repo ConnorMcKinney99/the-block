@@ -1,7 +1,6 @@
 # The Block
 
-I built The Block as a buyer-facing vehicle auction prototype using the 200
-supplied records in `data/vehicles.json`. The experience covers inventory
+I built The Block as a buyer-facing vehicle auction prototype. The experience covers inventory
 discovery, vehicle details, proxy bidding, Buy It Now, deterministic auction
 timing, and a personal bid history in a responsive dark interface.
 
