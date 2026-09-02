@@ -1,0 +1,516 @@
+.panel {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-top: 3px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+}
+
+.headingRow {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.kicker {
+  margin: 0 0 var(--space-1);
+  color: var(--color-accent-text);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.headingRow h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.timingBlock,
+.resultBanner {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.timingBlock {
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  background: var(--color-surface-subtle);
+}
+
+.timingBlock span {
+  color: var(--color-text-muted);
+  font-size: 0.76rem;
+  font-weight: 750;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.timingBlock strong {
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.timingBlock small {
+  grid-column: 1 / -1;
+  color: var(--color-text-subtle);
+  font-size: 0.74rem;
+}
+
+.resultBanner {
+  background: var(--color-neutral-status);
+  color: var(--color-text);
+}
+
+.resultBanner[data-outcome="buyer-purchased"],
+.resultBanner[data-outcome="buyer-won"] {
+  background: var(--color-positive-surface);
+  color: var(--color-positive-text);
+}
+
+.resultBanner[data-outcome="no-sale"],
+.resultBanner[data-outcome="no-bids"] {
+  background: var(--color-warning-surface);
+  color: var(--color-warning-text);
+}
+
+.resultBanner strong {
+  font-size: 0.95rem;
+}
+
+.resultBanner span {
+  font-size: 0.8rem;
+}
+
+.reserveStatus {
+  flex: 0 0 auto;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  background: var(--color-neutral-status);
+  color: var(--color-text-muted);
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.reserveStatus[data-status="met"] {
+  background: var(--color-positive-surface);
+  color: var(--color-positive-text);
+}
+
+.reserveStatus[data-status="not-met"] {
+  background: var(--color-warning-surface);
+  color: var(--color-warning-text);
+}
+
+.priceBlock {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-5) var(--space-4);
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-hover),
+    var(--color-accent)
+  );
+  color: white;
+}
+
+.priceBlock span {
+  color: rgb(255 255 255 / 74%);
+  font-size: 0.75rem;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.priceBlock strong {
+  font-size: clamp(2rem, 6vw, 2.6rem);
+  letter-spacing: -0.055em;
+  line-height: 1;
+}
+
+.priceBlock p {
+  margin: var(--space-1) 0 0;
+  color: rgb(255 255 255 / 80%);
+  font-size: 0.9rem;
+}
+
+.leadingStatus {
+  margin: 0;
+  padding: var(--space-2) var(--space-4);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-accent) 22%, white);
+  background: var(--color-accent-soft);
+  color: var(--color-accent-text);
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.buyerMaximum {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-1) var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface-subtle);
+}
+
+.buyerMaximum span {
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.buyerMaximum strong {
+  font-size: 1rem;
+  text-align: right;
+}
+
+.buyerMaximum small {
+  grid-column: 1 / -1;
+  color: var(--color-text-subtle);
+  font-size: 0.74rem;
+}
+
+.priorBidState {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-1) var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface-subtle);
+}
+
+.priorBidState span {
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.priorBidState strong {
+  font-size: 1rem;
+  text-align: right;
+}
+
+.priorBidState small {
+  grid-column: 1 / -1;
+  color: var(--color-text-subtle);
+  font-size: 0.74rem;
+}
+
+.buyNowSection {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.buyNowOffer {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-surface-subtle);
+}
+
+.buyNowOffer > div {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.buyNowOffer span {
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.buyNowOffer strong {
+  color: var(--color-text);
+  font-size: 1.4rem;
+  letter-spacing: -0.03em;
+}
+
+.buyNowOffer small {
+  color: var(--color-text-subtle);
+  font-size: 0.75rem;
+}
+
+.buyNowButton {
+  min-height: 2.75rem;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--color-text);
+  border-radius: var(--radius-md);
+  background: var(--color-text);
+  color: var(--color-surface);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.buyNowButton:hover {
+  border-color: var(--color-accent-hover);
+  background: var(--color-accent-hover);
+  color: white;
+}
+
+.bidDivider {
+  margin: 0;
+  padding: var(--space-3) var(--space-4) 0;
+  color: var(--color-text-subtle);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.bidSection {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.closedBidding {
+  margin: 0;
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface-subtle);
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.bidForm {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+
+.confirmationDialog {
+  width: min(32rem, calc(100vw - 2 * var(--page-gutter)));
+  max-height: calc(100vh - 2 * var(--space-6));
+  padding: 0;
+  overflow: auto;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 0 24px 64px rgb(0 0 0 / 58%);
+}
+
+.confirmationDialog::backdrop {
+  background: rgb(0 0 0 / 72%);
+  backdrop-filter: blur(2px);
+}
+
+.confirmationContent {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-5);
+}
+
+.bidField {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.bidField label {
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.bidField input {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--color-control-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+}
+
+.bidField input:hover,
+.bidField input:focus {
+  border-color: var(--color-accent);
+}
+
+.bidField input[aria-invalid="true"] {
+  border-color: var(--color-danger-text);
+}
+
+.bidHelp,
+.minimumBid,
+.bidError,
+.acknowledgement,
+.liveStatus {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.bidHelp,
+.acknowledgement {
+  color: var(--color-text-muted);
+}
+
+.minimumBid {
+  color: var(--color-text);
+}
+
+.bidError {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--color-danger-surface);
+  color: var(--color-danger-text);
+  font-weight: 700;
+}
+
+.primaryButton,
+.secondaryButton,
+.buyNowButton {
+  min-height: 2.75rem;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.primaryButton {
+  border: 1px solid var(--color-accent);
+  background: var(--color-accent);
+  color: white;
+}
+
+.primaryButton:hover:not(:disabled) {
+  border-color: var(--color-accent-hover);
+  background: var(--color-accent-hover);
+}
+
+.primaryButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+.secondaryButton {
+  border: 1px solid var(--color-control-border);
+  background: var(--color-surface);
+  color: var(--color-accent-text);
+}
+
+.secondaryButton:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+}
+
+.confirmationKicker {
+  margin: 0;
+  color: var(--color-accent-text);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.confirmationContent h3 {
+  margin: calc(var(--space-2) * -1) 0 0;
+  font-size: 1.25rem;
+}
+
+.confirmationDetails {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-subtle);
+}
+
+.confirmationDetails div {
+  display: grid;
+  grid-template-columns: minmax(5rem, 0.7fr) minmax(0, 1.3fr);
+  gap: var(--space-3);
+}
+
+.confirmationDetails dt {
+  color: var(--color-text-subtle);
+  font-size: 0.72rem;
+  font-weight: 750;
+  text-transform: uppercase;
+}
+
+.confirmationDetails dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: 0.82rem;
+  font-weight: 750;
+  text-align: right;
+}
+
+.confirmationActions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.liveStatus:empty {
+  display: none;
+}
+
+.liveStatus:not(:empty) {
+  margin: 0 var(--space-4) var(--space-4);
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--color-positive-surface);
+  color: var(--color-positive-text);
+  font-weight: 750;
+}
+
+.meta {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0 var(--space-4);
+}
+
+.meta div {
+  display: grid;
+  grid-template-columns: minmax(5rem, 0.65fr) minmax(0, 1.35fr);
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.meta dt {
+  color: var(--color-text-subtle);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.meta dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: 0.9rem;
+  font-weight: 650;
+  text-align: right;
+}
+
+.scheduleNote {
+  margin: 0;
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  color: var(--color-text-subtle);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
